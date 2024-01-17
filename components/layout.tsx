@@ -1,9 +1,5 @@
 import React, { ReactNode } from 'react';
 import Head from 'next/head';
-import { Inter } from 'next/font/google';
-import '../styles/globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 type LayoutProps = {
   children: ReactNode;
@@ -23,8 +19,10 @@ const Layout: React.FC<LayoutProps> = ({
         <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={inter.className}>
-        {children}
+      <main className="min-h-screen bg-gray-100 text-gray-800">
+        <div className="container mx-auto px-4 py-8">
+          {children}
+        </div>
       </main>
     </>
   );
