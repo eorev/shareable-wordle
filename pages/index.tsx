@@ -26,7 +26,7 @@ export default function Home() {
                             <h2>Create Wordle &rarr;</h2>
                             <p>Create a new custom Wordle puzzle.</p>
                         </Link>
-                        <Link href="/solve-wordle">
+                        <Link href="./solve-wordle">
                             <h2>Solve Wordle &rarr;</h2>
                             <p>Try solving an existing Wordle puzzle.</p>
                         </Link>
