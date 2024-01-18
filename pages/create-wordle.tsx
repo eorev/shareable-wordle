@@ -26,7 +26,9 @@ export default function CreateWordle() {
                 console.error('Error creating puzzle:', data.error);
                 alert('Error creating puzzle: ' + data.error); // Display error to the user
             } else {
-                const puzzleLink = `www.example.com/solve-wordle/${data.uniqueId}`;
+                const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+                const puzzleLink = `${baseUrl}/solve-wordle/${data.uniqueId}`;
+                console.log('Base URL:', process.env.REACT_APP_BASE_URL);
                 console.log('Share this link:', puzzleLink);
                 alert('Puzzle created! Share this link: ' + puzzleLink); // Display success message
             }
@@ -35,6 +37,7 @@ export default function CreateWordle() {
             alert('Failed to create puzzle. Please try again later.'); // Display fetch error
         }
     };
+
 
     return (
         <div>
