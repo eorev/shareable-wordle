@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Grid from '@/components/grid/Grid';
 
-// Define the type for your puzzle data
 type PuzzleType = {
     word: string;
     uniqueId: string;
@@ -64,18 +64,17 @@ const SolveWordle = () => {
                     <p>{successMessage}</p>
                 </div>
             ) : (
-                <div>
+                <>
                     <input type="text" value={userInput} onChange={handleInputChange} maxLength={puzzle?.word.length} />
                     <button onClick={handleSubmit}>Submit Guess</button>
-                    <div>
-                        <h2>Your Guesses:</h2>
-                        <ul>
-                            {guesses.map((guess, index) => (
-                                <li key={index}>{guess}</li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                    <Grid
+                        solution={puzzle.word}
+                        guesses={guesses}
+                        currentGuess={userInput}
+                        isRevealing={false} // Replace this with your actual revealing logic
+                        currentRowClassName="your-class-name"
+                    />
+                </>
             )}
         </div>
     );

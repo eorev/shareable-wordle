@@ -1,0 +1,49 @@
+.row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .letter {
+    border: 1px solid #ddd;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .letter.correct {
+    background-color: green;
+    color: white;
+    transform: scale(1.1);
+  }
+  
+  .letter.present {
+    background-color: yellow;
+    color: black;
+    transform: scale(1.1);
+  }
+  
+  .letter.absent {
+    background-color: lightgrey;
+    color: black;
+  }
+  
+  .revealing .letter {
+    animation: flip 0.3s;
+  }
+  
+  @keyframes flip {
+    0% {
+      transform: rotateX(0);
+    }
+    100% {
+      transform: rotateX(360deg);
+    }
+  }
+  
