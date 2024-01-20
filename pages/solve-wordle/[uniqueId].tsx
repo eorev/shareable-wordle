@@ -79,8 +79,8 @@ const SolveWordle = () => {
             solution={puzzle.word}
             guesses={guesses}
             currentGuess={userInput}
-            isGameOver={isGameOver}
             currentRowClassName="your-class-name"
+            isGameOver={isGameOver}
             maxGuesses={MAX_CHALLENGES}
           />
         </>

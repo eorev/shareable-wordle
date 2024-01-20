@@ -10,6 +10,8 @@ type Props = {
     currentGuess: string;
     isRevealing?: boolean;
     currentRowClassName: string;
+    isGameOver: boolean;
+    maxGuesses: number;
 };
 
 const Grid = ({
