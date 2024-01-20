@@ -11,7 +11,9 @@ const CompletedRow = ({ solution, guess, isRevealing }: CompletedRowProps) => {
       if (letter === solution[position]) {
         return "correct";
       } else if (solution.includes(letter)) {
-        return "incorrect";
+        return "present";
+      } else {
+        return "absent";
       }
     }
     return "";
