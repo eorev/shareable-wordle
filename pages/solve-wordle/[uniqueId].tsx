@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Grid from "@/components/grid/Grid";
 import { MAX_CHALLENGES } from "@/constants/settings";
+import Keyboard from "@/components/keyboard/Keyboard";
 
 type PuzzleType = {
   word: string;
@@ -82,6 +83,13 @@ const SolveWordle = () => {
             currentRowClassName="your-class-name"
             isGameOver={isGameOver}
             maxGuesses={MAX_CHALLENGES}
+          />
+          <Keyboard
+            onChar={(value) => setUserInput(prev => prev + value)}
+            onDelete={() => setUserInput(prev => prev.slice(0, -1))}
+            onEnter={handleSubmit}
+            solution={puzzle.word}
+            guesses={guesses}
           />
         </>
       )}
