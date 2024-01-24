@@ -20,8 +20,10 @@ const Grid = ({
     currentGuess,
     isRevealing = false,
     currentRowClassName,
+    isGameOver,
+    maxGuesses,
 }: Props) => {
-    const empties = Array.from({ length: MAX_CHALLENGES - guesses.length });
+    const emptyRows = maxGuesses - guesses.length - (isGameOver ? 0 : 1);
 
     return (
         <div className="grid">
@@ -33,10 +35,10 @@ const Grid = ({
                     isRevealing={isRevealing && guesses.length - 1 === i}
                 />
             ))}
-            {guesses.length < MAX_CHALLENGES && (
+            {!isGameOver && (
                 <CurrentRow guess={currentGuess} className={currentRowClassName} />
             )}
-            {empties.map((_, i) => (
+            {Array.from({ length: emptyRows }).map((_, i) => (
                 <EmptyRow key={i} />
             ))}
         </div>

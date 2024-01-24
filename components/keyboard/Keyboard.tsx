@@ -1,7 +1,7 @@
 // Keyboard.tsx
 import React, { useEffect, useState } from 'react';
-import { Key } from './Key'; // Adjust the import path as needed
-import { getStatuses } from '@/lib/statuses'; // Adjust import paths as needed
+import Key from '@/components/keyboard/Key';
+import { getStatuses } from '@/lib/statuses';
 
 type KeyboardProps = {
     onChar: (value: string) => void;
@@ -9,6 +9,7 @@ type KeyboardProps = {
     onEnter: () => void;
     solution: string;
     guesses: string[];
+    className?: string;
 };
 
 export const Keyboard = ({
@@ -61,6 +62,7 @@ export const Keyboard = ({
                         onClick={onClick}
                         status={charStatuses[key]}
                         isRevealing={isRevealing}
+                        className="text-lg p-2 m-1" // Adjust the size and spacing as needed
                     />
                 ))}
             </div>
@@ -72,22 +74,34 @@ export const Keyboard = ({
                         onClick={onClick}
                         status={charStatuses[key]}
                         isRevealing={isRevealing}
+                        className="text-lg p-2 m-1" // Adjust the size and spacing as needed
                     />
                 ))}
             </div>
             <div className="flex justify-center">
-                <Key width={65.4} value="ENTER" onClick={onClick} isRevealing={isRevealing} />
-                {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
+                <Key
+                    width={65.4}
+                    value="ENTER"
+                    onClick={onClick}
+                    isRevealing={isRevealing}
+                    status={charStatuses['ENTER'] || 'default'} // Replace 'default' with appropriate status or make it optional in KeyProps
+                />                {['Z', 'X', 'C', 'V', 'B', 'N', 'M'].map((key) => (
                     <Key
                         value={key}
                         key={key}
                         onClick={onClick}
                         status={charStatuses[key]}
                         isRevealing={isRevealing}
+                        className="text-lg p-2 m-1" // Adjust the size and spacing as needed
                     />
                 ))}
-                <Key width={65.4} value="DELETE" onClick={onClick} isRevealing={isRevealing} />
-            </div>
+                <Key
+                    width={65.4}
+                    value="DELETE"
+                    onClick={onClick}
+                    isRevealing={isRevealing}
+                    status={charStatuses['DELETE'] || 'default'} // Replace 'default' with appropriate status or make it optional in KeyProps
+                />            </div>
         </div>
     )
 }
