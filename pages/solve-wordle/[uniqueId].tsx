@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Grid from "@/components/grid/Grid";
+import Keyboard from "@/components/keyboard/Keyboard";
 import { MAX_CHALLENGES } from "@/constants/settings";
 
 type PuzzleType = {
@@ -12,7 +13,7 @@ const SolveWordle = () => {
   const router = useRouter();
   const { uniqueId } = router.query;
   const [puzzle, setPuzzle] = useState<PuzzleType | null>(null);
-  const [userInput, setUserInput] = useState("");
+  const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useState<string[]>([]);
   const [isGameOver, setIsGameOver] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -26,33 +27,33 @@ const SolveWordle = () => {
     }
   }, [uniqueId]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInput(event.target.value.toUpperCase());
+  const addCharToGuess = (char: string) => {
+    if (currentGuess.length < (puzzle?.word.length || 0)) {
+      setCurrentGuess(currentGuess + char);
+    }
   };
 
-  const handleSubmit = () => {
-    if (!puzzle) {
-      return; // Or handle the error state
-    }
+  const removeLastChar = () => {
+    setCurrentGuess(currentGuess.slice(0, -1));
+  };
 
-    if (userInput.length !== puzzle.word.length) {
-      alert(`Please enter a ${puzzle.word.length}-letter word.`);
+  const submitGuess = () => {
+    if (!puzzle) {
       return;
     }
 
-    setGuesses((prevGuesses) => [...prevGuesses, userInput]);
+    if (currentGuess.length === puzzle.word.length) {
+      setGuesses([...guesses, currentGuess]);
+      setCurrentGuess("");
 
-    if (userInput.toUpperCase() === puzzle.word.toUpperCase()) {
-      setIsGameOver(true);
-      setSuccessMessage("Congratulations! You guessed the word!");
-    } else if (guesses.length >= MAX_CHALLENGES - 1) {
-      setIsGameOver(true);
-      setSuccessMessage(
-        `Game Over! The word was ${puzzle.word.toUpperCase()}.`,
-      );
+      if (currentGuess.toUpperCase() === puzzle.word.toUpperCase()) {
+        setIsGameOver(true);
+        setSuccessMessage("Congratulations! You guessed the word!");
+      } else if (guesses.length >= MAX_CHALLENGES - 1) {
+        setIsGameOver(true);
+        setSuccessMessage(`Game Over! The word was ${puzzle.word.toUpperCase()}.`);
+      }
     }
-
-    setUserInput("");
   };
 
   if (!puzzle) {
@@ -68,20 +69,20 @@ const SolveWordle = () => {
         </div>
       ) : (
         <>
-          <input
-            type="text"
-            value={userInput}
-            onChange={handleInputChange}
-            maxLength={puzzle?.word.length}
-          />
-          <button onClick={handleSubmit}>Submit Guess</button>
           <Grid
             solution={puzzle.word}
             guesses={guesses}
-            currentGuess={userInput}
+            currentGuess={currentGuess}
             currentRowClassName="your-class-name"
             isGameOver={isGameOver}
             maxGuesses={MAX_CHALLENGES}
+          />
+          <Keyboard
+            onChar={addCharToGuess}
+            onDelete={removeLastChar}
+            onEnter={submitGuess}
+            solution={puzzle.word}
+            guesses={guesses}
           />
         </>
       )}
