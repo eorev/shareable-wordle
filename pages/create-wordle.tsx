@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import StackedNotifications from '@/components/StackNotifications';
 import { Notification } from "@/types/types";
+import BarLoader from "@/components/BarLoader";
 
 export default function CreateWordle() {
   const [word, setWord] = useState("");
@@ -62,31 +63,49 @@ export default function CreateWordle() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <BarLoader />
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1>Create Wordle</h1>
-      <StackedNotifications notification={notification} removeNotif={() => setNotification(null)} />
-      {puzzleLink ? (
-        <div>
-          <p>Puzzle created! Share this link:</p>
-          <p>{puzzleLink}</p>
-          <button onClick={copyToClipboard}>Copy Link</button>
-        </div>
-      ) : (
-        <div>
-          <input
-            type="text"
-            placeholder="Enter 5-letter word"
-            value={word}
-            onChange={handleInputChange}
-            maxLength={5}
-          />
-          <button onClick={createPuzzle}>Create Puzzle</button>
-        </div>
-      )}
+    <div className="bg-foreground min-h-screen flex justify-center items-center p-4">
+      <div className="w-full max-w-md">
+        <h1 className="text-primary text-3xl font-bold mb-8 text-center">Create Wordle</h1>
+        <StackedNotifications notification={notification} removeNotif={() => setNotification(null)} />
+
+        {puzzleLink ? (
+          <div className="text-center">
+            <p className="text-copy mb-4">Puzzle created! Share this link:</p>
+            <p className="text-secondary-content mb-4">{puzzleLink}</p>
+            <button
+              onClick={copyToClipboard}
+              className="bg-secondary text-secondary-content px-4 py-2 rounded hover:bg-secondary-light transition duration-300"
+            >
+              Copy Link
+            </button>
+          </div>
+        ) : (
+          <div>
+            <input
+              type="text"
+              placeholder="Enter 5-letter word"
+              value={word}
+              onChange={handleInputChange}
+              maxLength={5}
+              className="border border-border rounded p-2 mb-4 w-full"
+            />
+            <button
+              onClick={createPuzzle}
+              className="bg-primary text-primary-content px-4 py-2 rounded hover:bg-primary-light transition duration-300 w-full"
+            >
+              Create Puzzle
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
