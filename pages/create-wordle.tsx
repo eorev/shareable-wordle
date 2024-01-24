@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import StackedNotifications from '@/components/StackNotifications';
+import { Notification } from "@/types/types";
 
 export default function CreateWordle() {
   const [word, setWord] = useState("");
   const [loading, setLoading] = useState(false);
   const [puzzleLink, setPuzzleLink] = useState("");
+  const [notification, setNotification] = useState<Notification | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputWord = event.target.value.toUpperCase();
@@ -12,9 +15,15 @@ export default function CreateWordle() {
     }
   };
 
+  const showNotification = (text: string) => {
+    const newNotification = { id: Date.now(), text };
+    setNotification(newNotification);
+    setTimeout(() => setNotification(null), 5000); // Auto-remove after 5 seconds
+  };
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(puzzleLink).then(() => {
-      alert("Link copied to clipboard!");
+      showNotification("Link copied to clipboard!");
     }).catch(err => {
       console.error('Could not copy text: ', err);
     });
@@ -43,6 +52,7 @@ export default function CreateWordle() {
 
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       setPuzzleLink(`${baseUrl}/solve-wordle/${data.uniqueId}`);
+      showNotification("Puzzle created successfully!");
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
       alert("Failed to create puzzle. Please try again later.");
@@ -58,6 +68,7 @@ export default function CreateWordle() {
   return (
     <div>
       <h1>Create Wordle</h1>
+      <StackedNotifications notification={notification} removeNotif={() => setNotification(null)} />
       {puzzleLink ? (
         <div>
           <p>Puzzle created! Share this link:</p>
