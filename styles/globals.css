@@ -2,4 +2,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import './tailwind.config.ts';
+@import 'tailwind.config.ts';
