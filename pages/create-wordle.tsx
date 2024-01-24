@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import StackedNotifications from '@/components/StackNotifications';
 import { Notification } from "@/types/types";
+import BarLoader from "@/components/BarLoader";
 
 export default function CreateWordle() {
   const [word, setWord] = useState("");
@@ -62,7 +63,11 @@ export default function CreateWordle() {
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center min-h-screen text-primary text-xl">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <BarLoader />
+      </div>
+    );
   }
 
   return (

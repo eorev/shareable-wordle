@@ -46,10 +46,10 @@ const Notification = ({ text, id, removeNotif }: Notification & { removeNotif: (
       animate={{ y: 0, scale: 1, opacity: 1 }}
       exit={{ y: -25, scale: 0.9, opacity: 0 }}
       transition={{ type: "spring" }}
-      className="p-4 w-80 flex items-start rounded-lg gap-2 text-sm font-medium shadow-lg text-white bg-violet-600 fixed z-50 bottom-4 right-4"
+      className="p-4 w-80 flex items-start rounded-lg gap-2 text-sm font-medium shadow-lg text-white bg-primary fixed z-50 bottom-4 right-4"
     >
-      <span>{text}</span>
-      <button onClick={() => removeNotif(id)} className="ml-auto mt-0.5">
+      <span className="text-copy">{text}</span>
+      <button onClick={() => removeNotif(id)} className="ml-auto mt-0.5 text-primary-light">
         <FiX />
       </button>
     </motion.div>
