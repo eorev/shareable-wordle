@@ -66,7 +66,7 @@ export default function CreateWordle() {
   }
 
   return (
-    <div>
+    <>
       <h1>Create Wordle</h1>
       <StackedNotifications notification={notification} removeNotif={() => setNotification(null)} />
       {puzzleLink ? (
@@ -87,6 +87,6 @@ export default function CreateWordle() {
           <button onClick={createPuzzle}>Create Puzzle</button>
         </div>
       )}
-    </div>
+    </>
   );
 }

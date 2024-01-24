@@ -14,7 +14,7 @@ interface StackedNotificationsProps {
 
 const StackedNotifications = ({ notification, removeNotif }: StackedNotificationsProps) => {
   return (
-    <div className="fixed inset-0 z-50 flex justify-end items-end p-4">
+    <div className="fixed bottom-0 right-0 z-50 p-4">
       <AnimatePresence>
         {notification && (
           <Notification
