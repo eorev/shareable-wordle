@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Grid from "@/components/grid/Grid";
 import Keyboard from "@/components/keyboard/Keyboard";
 import { MAX_CHALLENGES } from "@/constants/settings";
+import "../styles/globals.css";
 
 type PuzzleType = {
   word: string;
