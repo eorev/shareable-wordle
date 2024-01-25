@@ -43,7 +43,7 @@ const SolveWordle = () => {
       return;
     }
 
-    const newGuesses = [...guesses, currentGuess.toUpperCase()]; // Convert to uppercase for consistency
+    const newGuesses = [...guesses, currentGuess.toUpperCase()];
     setGuesses(newGuesses);
     setCurrentGuess("");
 
@@ -56,17 +56,19 @@ const SolveWordle = () => {
     }
   };
 
-
-
   if (!puzzle) {
-    return <div className="flex justify-center items-center min-h-screen">Loading puzzle...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Loading puzzle...
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Solve the Wordle Puzzle</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Solve the Wordle Puzzle</h1>
       {isGameOver ? (
-        <div>
+        <div className="text-center">
           <p>{successMessage}</p>
         </div>
       ) : (
