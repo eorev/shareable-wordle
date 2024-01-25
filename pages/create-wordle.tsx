@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import StackedNotifications from '@/components/StackNotifications';
 import { Notification } from "@/types/types";
 import BarLoader from "@/components/BarLoader";
+import "../styles/globals.css";
 
 export default function CreateWordle() {
   const [word, setWord] = useState("");
