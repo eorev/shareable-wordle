@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Grid from "@/components/grid/Grid";
 import Keyboard from "@/components/keyboard/Keyboard";
 import { MAX_CHALLENGES } from "@/constants/settings";
+import "@/styles/globals.css";
 
 type PuzzleType = {
   word: string;
@@ -66,9 +67,11 @@ const SolveWordle = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">Solve the Wordle Puzzle</h1>
+      <div className="w-full text-center">
+        <h1 className="text-2xl font-bold mb-4">Solve the Wordle Puzzle</h1>
+      </div>
       {isGameOver ? (
-        <div className="text-center">
+        <div className="w-full text-center">
           <p>{successMessage}</p>
         </div>
       ) : (
@@ -82,7 +85,7 @@ const SolveWordle = () => {
             isGameOver={isGameOver}
             maxGuesses={MAX_CHALLENGES}
           />
-          <div className="flex justify-center mt-4">
+          <div className="w-full flex justify-center mt-4">
             <Keyboard
               onChar={addCharToGuess}
               onDelete={removeLastChar}
