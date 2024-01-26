@@ -12,20 +12,18 @@ To run this project locally, follow these steps:
 
 ## Usage
 
-To start the game, run the following command: `npm run start`
+To start the game, run the following command: `npm run dev`
 
 Once the game is running, open your web browser and navigate to `http://localhost:3000` to access the game interface.
 
-## Contributing
+## Landing Page
 
-Contributions are welcome! If you'd like to contribute to this project, please follow these guidelines:
+![Landing Page](/screenshots/landing_wordle.jpeg)
 
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`
-3. Make your changes and commit them: `git commit -m 'Add your feature description'`
-4. Push to the branch: `git push origin feature/your-feature-name`
-5. Submit a pull request.
+## Create Wordle
 
-## Contact
+![Create Wordle](/screenshots/create_wordle.jpeg)
 
-If you have any questions or suggestions, feel free to reach out to the project owner, eorev, via email at [eorev@example.com](mailto:eorev@example.com).
+## Solve Wordle
+
+![Solve Wordle](/screenshots/puzzle_wordle.jpeg)
