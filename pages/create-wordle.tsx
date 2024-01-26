@@ -2,38 +2,55 @@ import React, { useState } from "react";
 import StackedNotifications from '@/components/StackNotifications';
 import { Notification } from "@/types/types";
 import BarLoader from "@/components/BarLoader";
-import "@/styles/globals.css"
+import "@/styles/globals.css";
 
 interface LinkDisplayProps {
   link: string;
-  onCopy: () => void;
+  uniqueId: string;
+  onCopy: (text: string) => void;
 }
 
-const LinkDisplay = ({ link, onCopy }: LinkDisplayProps) => {
-  const [copied, setCopied] = useState(false);
+const LinkDisplay = ({ link, uniqueId, onCopy }: LinkDisplayProps) => {
+  const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedId, setCopiedId] = useState(false);
 
-  const handleCopy = () => {
-    onCopy();
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyLink = () => {
+    onCopy(link);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2000);
+  };
+
+  const handleCopyId = () => {
+    onCopy(uniqueId);
+    setCopiedId(true);
+    setTimeout(() => setCopiedId(false), 2000);
   };
 
   return (
     <div className="text-center">
-      <p className="text-copy mb-4">Puzzle created! Share this link:</p>
+      <p className="text-copy mb-4">Puzzle created! Share this link or ID:</p>
       <input
         type="text"
         value={link}
         readOnly
-        className="border border-border rounded p-2 mb-4 w-full text-dark" // Changed class here
+        className="border border-border rounded p-2 mb-4 w-full text-dark"
         onClick={(e) => (e.target as HTMLInputElement).select()}
       />
-      <button
-        onClick={handleCopy}
-        className="bg-secondary text-secondary-content px-4 py-2 rounded hover:bg-secondary-light transition duration-300 inline-flex items-center"
-      >
-        {copied ? "Copied!" : "Copy Link"}
-      </button>
+      <div>
+        <button
+          onClick={handleCopyLink}
+          className="bg-secondary text-secondary-content px-4 py-2 rounded hover:bg-secondary-light transition duration-300 inline-flex items-center mr-2"
+        >
+          {copiedLink ? "Copied Link!" : "Copy Link"}
+        </button>
+        <span>OR</span>
+        <button
+          onClick={handleCopyId}
+          className="bg-secondary text-secondary-content px-4 py-2 rounded hover:bg-secondary-light transition duration-300 inline-flex items-center ml-2"
+        >
+          {copiedId ? "Copied ID!" : "Copy ID"}
+        </button>
+      </div>
     </div>
   );
 };
@@ -42,6 +59,7 @@ export default function CreateWordle() {
   const [word, setWord] = useState("");
   const [loading, setLoading] = useState(false);
   const [puzzleLink, setPuzzleLink] = useState("");
+  const [uniqueId, setUniqueId] = useState("");
   const [notification, setNotification] = useState<Notification | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,12 +72,12 @@ export default function CreateWordle() {
   const showNotification = (text: string) => {
     const newNotification = { id: Date.now(), text };
     setNotification(newNotification);
-    setTimeout(() => setNotification(null), 5000); // Auto-remove after 5 seconds
+    setTimeout(() => setNotification(null), 5000);
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(puzzleLink).then(() => {
-      showNotification("Link copied to clipboard!");
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      showNotification("Text copied to clipboard!");
     }).catch(err => {
       console.error('Could not copy text: ', err);
     });
@@ -87,7 +105,9 @@ export default function CreateWordle() {
       }
 
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-      setPuzzleLink(`${baseUrl}/solve-wordle/${data.uniqueId}`);
+      const newPuzzleLink = `${baseUrl}/solve-wordle/${data.uniqueId}`;
+      setPuzzleLink(newPuzzleLink);
+      setUniqueId(data.uniqueId);
       showNotification("Puzzle created successfully!");
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
@@ -111,8 +131,8 @@ export default function CreateWordle() {
         <h1 className="text-primary text-3xl font-bold mb-8 text-center">Create Wordle</h1>
         <StackedNotifications notification={notification} removeNotif={() => setNotification(null)} />
 
-        {puzzleLink ? (
-          <LinkDisplay link={puzzleLink} onCopy={copyToClipboard} />
+        {puzzleLink && uniqueId ? (
+          <LinkDisplay link={puzzleLink} uniqueId={uniqueId} onCopy={copyToClipboard} />
         ) : (
           <div>
             <input
