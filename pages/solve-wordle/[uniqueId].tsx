@@ -4,6 +4,7 @@ import Grid from "@/components/grid/Grid";
 import Keyboard from "@/components/keyboard/Keyboard";
 import { MAX_CHALLENGES } from "@/constants/settings";
 import "@/styles/globals.css";
+import "@/styles/grid.css";
 
 type PuzzleType = {
   word: string;
@@ -47,6 +48,9 @@ const SolveWordle = () => {
     const newGuesses = [...guesses, currentGuess.toUpperCase()];
     setGuesses(newGuesses);
     setCurrentGuess("");
+    setIsRevealing(true);  // Set isRevealing to true when a guess is submitted
+
+    setTimeout(() => setIsRevealing(false), 2000); // Reset isRevealing after 2 seconds
 
     if (currentGuess.toUpperCase() === puzzle.word.toUpperCase()) {
       setIsGameOver(true);

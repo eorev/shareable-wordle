@@ -33,17 +33,3 @@
     background-color: lightgrey;
     color: black;
   }
-  
-  .revealing .letter {
-    animation: flip 0.3s;
-  }
-  
-  @keyframes flip {
-    0% {
-      transform: rotateX(0);
-    }
-    100% {
-      transform: rotateX(360deg);
-    }
-  }
-  

@@ -1,8 +1,9 @@
-import { MAX_CHALLENGES } from '@/constants/settings'
+import React from 'react';
 import CompletedRow from '@/components/grid/CompletedRow';
 import CurrentRow from '@/components/grid/CurrentRow';
 import EmptyRow from '@/components/grid/EmptyRow';
-import '@/styles/grid.css'
+import '@/styles/grid.css';
+import '@/styles/globals.css';
 
 type Props = {
     solution: string;
@@ -32,7 +33,7 @@ const Grid = ({
                     key={i}
                     solution={solution}
                     guess={guess}
-                    isRevealing={isRevealing && guesses.length - 1 === i}
+                    isRevealing={isRevealing && i === guesses.length - 1}
                 />
             ))}
             {!isGameOver && (
