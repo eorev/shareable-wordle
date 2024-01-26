@@ -69,6 +69,12 @@ export default function CreateWordle() {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && word.length === 5) {
+      createPuzzle();
+    }
+  };
+
   const showNotification = (text: string) => {
     const newNotification = { id: Date.now(), text };
     setNotification(newNotification);
@@ -140,6 +146,7 @@ export default function CreateWordle() {
               placeholder="Enter 5-letter word"
               value={word}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               maxLength={5}
               className="border border-border rounded p-2 mb-4 w-full"
             />
