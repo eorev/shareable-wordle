@@ -19,7 +19,7 @@ export default function Home() {
                 <p className="text-xl text-copy mb-8">
                     Create your own Wordle or try solving one.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-background">
                     <Link href="/create-wordle" className="text-2xl font-bold text-primary-dark hover:text-primary-light mb-2">
                         Create Wordle &rarr;
                     </Link>
