@@ -4,6 +4,40 @@ import { Notification } from "@/types/types";
 import BarLoader from "@/components/BarLoader";
 import "@/styles/globals.css"
 
+interface LinkDisplayProps {
+  link: string;
+  onCopy: () => void;
+}
+
+const LinkDisplay = ({ link, onCopy }: LinkDisplayProps) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    onCopy();
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="text-center">
+      <p className="text-copy mb-4">Puzzle created! Share this link:</p>
+      <input
+        type="text"
+        value={link}
+        readOnly
+        className="border border-border rounded p-2 mb-4 w-full text-dark" // Changed class here
+        onClick={(e) => (e.target as HTMLInputElement).select()}
+      />
+      <button
+        onClick={handleCopy}
+        className="bg-secondary text-secondary-content px-4 py-2 rounded hover:bg-secondary-light transition duration-300 inline-flex items-center"
+      >
+        {copied ? "Copied!" : "Copy Link"}
+      </button>
+    </div>
+  );
+};
+
 export default function CreateWordle() {
   const [word, setWord] = useState("");
   const [loading, setLoading] = useState(false);
@@ -78,16 +112,7 @@ export default function CreateWordle() {
         <StackedNotifications notification={notification} removeNotif={() => setNotification(null)} />
 
         {puzzleLink ? (
-          <div className="text-center">
-            <p className="text-copy mb-4">Puzzle created! Share this link:</p>
-            <p className="text-secondary-content mb-4">{puzzleLink}</p>
-            <button
-              onClick={copyToClipboard}
-              className="bg-secondary text-secondary-content px-4 py-2 rounded hover:bg-secondary-light transition duration-300"
-            >
-              Copy Link
-            </button>
-          </div>
+          <LinkDisplay link={puzzleLink} onCopy={copyToClipboard} />
         ) : (
           <div>
             <input
