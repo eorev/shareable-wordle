@@ -1,5 +1,7 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import '@/styles/globals.css';
+import '@/styles/grid.css';
 
 type CompletedRowProps = {
   solution: string;
@@ -8,32 +10,36 @@ type CompletedRowProps = {
 };
 
 const CompletedRow = ({ solution, guess, isRevealing }: CompletedRowProps) => {
-  const getStatus = (letter: string, position: number) => {
-    if (isRevealing) {
-      if (letter === solution[position]) {
-        return "correct";
-      } else if (solution.includes(letter)) {
-        return "present";
-      } else {
-        return "absent";
-      }
-    }
-    return "";
-  };
+  const solutionChars = Array.from(solution);
+  const usedLetters = Array(solution.length).fill(false);
 
   const flipVariants = {
-    hidden: { rotateX: 90, opacity: 0 },
-    visible: { rotateX: 0, opacity: 1 },
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  const getStatus = (letter: string, position: number) => {
+    if (letter === solutionChars[position]) {
+      usedLetters[position] = true;
+      return "correct";
+    } else if (solutionChars.includes(letter)) {
+      const index = solutionChars.findIndex((char, idx) => char === letter && !usedLetters[idx]);
+      if (index !== -1) {
+        usedLetters[index] = true;
+        return "present";
+      }
+    }
+    return "absent";
   };
 
   const getColor = (status: string) => {
     switch (status) {
       case 'correct':
-        return 'green'; // Correct letters
+        return 'green';
       case 'present':
-        return 'yellow'; // Letters present in the word but in the wrong spot
+        return 'yellow';
       case 'absent':
-        return 'lightgray'; // Letters not present in the word
+        return 'lightgray';
       default:
         return 'transparent';
     }
@@ -41,22 +47,23 @@ const CompletedRow = ({ solution, guess, isRevealing }: CompletedRowProps) => {
 
   return (
     <div className="row">
-      <AnimatePresence>
-        {guess.split("").map((letter, i) => (
+      {guess.split("").map((letter, i) => {
+        const status = getStatus(letter, i);
+        const color = getColor(status);
+
+        return (
           <motion.div
             key={i}
-            className={`letter`}
+            className={`letter ${status}`}
             initial="hidden"
             animate="visible"
-            exit="hidden"
             variants={flipVariants}
-            transition={{ delay: i * 0.1, duration: 0.5 }}
-            style={{ backgroundColor: getColor(getStatus(letter, i)) }}
+            style={{ backgroundColor: color }}
           >
             {letter}
           </motion.div>
-        ))}
-      </AnimatePresence>
+        );
+      })}
     </div>
   );
 };

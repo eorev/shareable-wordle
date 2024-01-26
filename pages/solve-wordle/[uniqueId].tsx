@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import Grid from "@/components/grid/Grid";
 import Keyboard from "@/components/keyboard/Keyboard";
 import { MAX_CHALLENGES } from "@/constants/settings";
+import "@/styles/globals.css";
+import "@/styles/grid.css";
 
 type PuzzleType = {
   word: string;
@@ -43,9 +45,12 @@ const SolveWordle = () => {
       return;
     }
 
-    const newGuesses = [...guesses, currentGuess.toUpperCase()]; // Convert to uppercase for consistency
+    const newGuesses = [...guesses, currentGuess.toUpperCase()];
     setGuesses(newGuesses);
     setCurrentGuess("");
+    setIsRevealing(true);  // Set isRevealing to true when a guess is submitted
+
+    setTimeout(() => setIsRevealing(false), 2000); // Reset isRevealing after 2 seconds
 
     if (currentGuess.toUpperCase() === puzzle.word.toUpperCase()) {
       setIsGameOver(true);
@@ -56,17 +61,21 @@ const SolveWordle = () => {
     }
   };
 
-
-
   if (!puzzle) {
-    return <div className="flex justify-center items-center min-h-screen">Loading puzzle...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Loading puzzle...
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">Solve the Wordle Puzzle</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+      <div className="w-full text-center">
+        <h1 className="text-2xl font-bold mb-4">Solve the Wordle Puzzle</h1>
+      </div>
       {isGameOver ? (
-        <div>
+        <div className="w-full text-center">
           <p>{successMessage}</p>
         </div>
       ) : (
@@ -80,7 +89,7 @@ const SolveWordle = () => {
             isGameOver={isGameOver}
             maxGuesses={MAX_CHALLENGES}
           />
-          <div className="flex justify-center mt-4">
+          <div className="w-full flex justify-center mt-4">
             <Keyboard
               onChar={addCharToGuess}
               onDelete={removeLastChar}
