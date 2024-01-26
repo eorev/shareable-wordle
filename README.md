@@ -26,10 +26,6 @@ Contributions are welcome! If you'd like to contribute to this project, please f
 4. Push to the branch: `git push origin feature/your-feature-name`
 5. Submit a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Contact
 
 If you have any questions or suggestions, feel free to reach out to the project owner, eorev, via email at [eorev@example.com](mailto:eorev@example.com).
